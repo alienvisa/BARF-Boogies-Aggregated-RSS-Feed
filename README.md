@@ -1,6 +1,10 @@
 # BARF - Boogies Aggregated RSS Feed
 
-Repository/project title: BARF - Boogies Aggregated RSS Feed. The installed app is currently labeled BARF. Native Android app; Kotlin, Jetpack Compose, Room/SQLite, and WorkManager. No backend, account, analytics, AI, or cloud backup. Android 8.0+ (API 26). This is the first development build, version 0.1.2.
+Repository/project title: BARF - Boogies Aggregated RSS Feed. The installed app is labeled BARF. Native Android app; Kotlin, Jetpack Compose, Room/SQLite, and WorkManager. No backend, account, analytics, AI, or cloud backup. Android 8.0+ (API 26). Current development version: 0.1.2.
+
+## Download
+
+Get the APK from [GitHub Releases](https://github.com/alienvisa/BARF-Boogies-Aggregated-RSS-Feed/releases/tag/v0.1.2). Choose **BARF-0.1.2-preview.apk** for the lightweight install (1.67 MiB). The debug APK is supplied for troubleshooting. This early release uses the existing development signing key; installing over the prior build keeps local data. Android may require permission to install from the app used to download it.
 
 ## Included
 

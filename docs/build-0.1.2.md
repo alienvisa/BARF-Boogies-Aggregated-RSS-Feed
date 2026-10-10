@@ -12,7 +12,7 @@ The viewer uses the device's WebView without adding a browser SDK. See the [Andr
 
 Network/site errors provide retry and an external-open fallback. A stopped rendering process is handled without retaining its destroyed viewer. Downloads are handed to an external browser.
 
-The installed app name, share target, Settings, and empty-state copy now use BARF. This name-only rebuild keeps version 0.1.2, version code 3, and the same application ID and signing key. Both builds and lint were rerun successfully; the 24 automated tests passed on the preceding browser build and were not rerun for this text-only change.
+The installed app name, share target, Settings, and empty-state copy now use BARF. This name-only rebuild keeps version 0.1.2, version code 3, and the same application ID and signing key. Both builds and lint were rerun successfully. The final release check reran all 24 automated tests successfully after the name change.
 
 ## Verification
 
