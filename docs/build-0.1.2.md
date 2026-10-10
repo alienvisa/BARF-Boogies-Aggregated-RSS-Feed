@@ -1,6 +1,6 @@
 # BARF · Build 0.1.2
 
-October 10, 2026 · In-app article viewer
+October 10, 2026 · In-app article viewer and BARF app name
 
 ## Behavior
 
@@ -12,6 +12,8 @@ The viewer uses the device's WebView without adding a browser SDK. See the [Andr
 
 Network/site errors provide retry and an external-open fallback. A stopped rendering process is handled without retaining its destroyed viewer. Downloads are handed to an external browser.
 
+The installed app name, share target, Settings, and empty-state copy now use BARF. This name-only rebuild keeps version 0.1.2, version code 3, and the same application ID and signing key. Both builds and lint were rerun successfully; the 24 automated tests passed on the preceding browser build and were not rerun for this text-only change.
+
 ## Verification
 
 | Check | Result |
@@ -21,8 +23,8 @@ Network/site errors provide retry and an external-open fallback. A stopped rende
 | Lint, both variants | 0 errors, 11 advisory warnings |
 | APK signatures, both variants | Verified |
 | Packaged version | Code 3; preview 0.1.2-preview |
-| Preview APK | 1,756,138 bytes (1.67 MiB) |
-| Debug APK | 19,171,494 bytes |
+| Preview APK | 1,756,134 bytes (1.67 MiB) |
+| Debug APK | 19,171,500 bytes |
 
 Browser coverage checks HTTPS navigation boundaries, blocked local/executable schemes, opening and closing a saved article inside the app, configured WebView access restrictions, and saving a followed page without replacing the original bookmark. Existing feed, retention, sharing, and backup tests also pass. Activity ViewModels now receive an explicit factory bound to the current application.
 
@@ -31,8 +33,8 @@ The 11 lint warnings comprise nine dependency update advisories, one redundant r
 Application ID app.localbrief and the development signing certificate are unchanged. Install over the prior APK to keep local data.
 
 - Certificate SHA-256: 74034762E2AE90BFCA3BBBDC68C98B4B141624D452EE365EB7430FB7CB41D03E
-- Preview SHA-256: 20B76605B918CFA02F81529FCF7BC74252CC15B7ECE63A3266EFE77120D12EDA
-- Debug SHA-256: 8B2EB47A8541E94561899D6DF3046ED5604259BA03AC337DA0E4E9C9273701FE
+- Preview SHA-256: 40861BE2D275365AD56ACDEC652846CE6270FF909FD4BA6F14EAEB1FBC53487A
+- Debug SHA-256: 32F31C6136BF6B0A703A294EACDDF2C25012BCB27637EE6E9F5FA0F23AA5EEBD
 
 ## Remaining device checks
 

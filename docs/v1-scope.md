@@ -18,4 +18,4 @@ The approved design bible and eight approved mockups remain the visual baseline.
 
 The first milestone is a buildable native project plus an installable development APK, meaningful automated checks, and a clear report of remaining device validation. Notifications, full-article downloads, multi-device sync, web discovery beyond chosen sources, and public-store release are outside this initial development milestone.
 
-Local Brief is a provisional app name, not a final branding decision.
+The app is named BARF (Boogies Aggregated RSS Feed).

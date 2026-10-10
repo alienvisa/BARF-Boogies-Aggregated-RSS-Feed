@@ -1,6 +1,6 @@
 # BARF - Boogies Aggregated RSS Feed
 
-Repository/project title: BARF - Boogies Aggregated RSS Feed. The installed app is currently labeled Local Brief. Native Android app; Kotlin, Jetpack Compose, Room/SQLite, and WorkManager. No backend, account, analytics, AI, or cloud backup. Android 8.0+ (API 26). This is the first development build, version 0.1.2.
+Repository/project title: BARF - Boogies Aggregated RSS Feed. The installed app is currently labeled BARF. Native Android app; Kotlin, Jetpack Compose, Room/SQLite, and WorkManager. No backend, account, analytics, AI, or cloud backup. Android 8.0+ (API 26). This is the first development build, version 0.1.2.
 
 ## Included
 
@@ -25,12 +25,12 @@ The app keeps a small URL/arrival ledger for each source's current feed window (
 
 ## First use
 
-1. Install the development APK and open Local Brief.
+1. Install the development APK and open BARF.
 2. Open Topics → Manage sources → Add source.
 3. Paste an HTTPS website/feed URL or YouTube channel URL/ID. Names are optional for new sources.
 4. Add topics, connect sources, and optionally define include/exclude phrases.
 5. Browse Today; tap a headline to read the original page inside the app. Close it to return to the feed.
-6. In a browser or YouTube, use Share → Local Brief to save a link locally.
+6. In a browser or YouTube, use Share → BARF to save a link locally.
 7. Export a backup from Settings before uninstalling or changing phones.
 
 ## Source compatibility and boundaries

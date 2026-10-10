@@ -193,7 +193,7 @@ import java.util.Date
                                 if (list.isEmpty() && ready) item {
                                     EmptyCard(if (route == "Saved") if (savedQuery.isNotBlank()) "No matching saved items" else "Nothing saved yet"
                                         else if (state.sources.isEmpty()) "Choose your first source" else if (route == "Topic") "No matching updates" else "You're caught up",
-                                        if (route == "Saved") "Save an update or share a link into Local Brief."
+                                        if (route == "Saved") "Save an update or share a link into BARF."
                                         else if (state.sources.isEmpty()) "Add a website feed, RSS feed, or YouTube channel."
                                         else "Refresh or browse earlier updates.", dark)
                                 }
@@ -248,7 +248,7 @@ import java.util.Date
                         PrimaryButton("Export backup", Icons.Outlined.FileDownload) { export.launch("local-brief-backup.json") }
                         OutlinedButton(onClick = { import.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) }, modifier = Modifier.fillMaxWidth()) { Text("Import backup", color = pageText) }
                         Text("No account, server, analytics, AI, or cloud backup. Feeds and images load directly. The article viewer contacts the publisher and the services embedded in its page.", color = subtle, style = MaterialTheme.typography.bodySmall)
-                        Text("Local Brief · v0.1.2", color = subtle, style = MaterialTheme.typography.bodySmall)
+                        Text("BARF · v0.1.2", color = subtle, style = MaterialTheme.typography.bodySmall)
                     }
                 }
             }
