@@ -250,7 +250,7 @@ import java.util.Date
                         PrimaryButton("Export backup", Icons.Outlined.FileDownload) { export.launch("local-brief-backup.json") }
                         OutlinedButton(onClick = { import.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) }, modifier = Modifier.fillMaxWidth()) { Text("Import backup", color = pageText) }
                         Text("No account, server, analytics, AI, or cloud backup. Feeds and images load directly. The article viewer contacts the publisher and the services embedded in its page.", color = subtle, style = MaterialTheme.typography.bodySmall)
-                        Text("BARF · v0.1.2", color = subtle, style = MaterialTheme.typography.bodySmall)
+                        Text("BARF · v0.1.3", color = subtle, style = MaterialTheme.typography.bodySmall)
                     }
                 }
             }

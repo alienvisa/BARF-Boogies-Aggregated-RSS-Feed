@@ -1,10 +1,21 @@
 # BARF - Boogies Aggregated RSS Feed
 
-Repository/project title: BARF - Boogies Aggregated RSS Feed. The installed app is labeled BARF. Native Android app; Kotlin, Jetpack Compose, Room/SQLite, and WorkManager. No backend, account, analytics, AI, or cloud backup. Android 8.0+ (API 26). Current development version: 0.1.2.
+Repository/project title: BARF - Boogies Aggregated RSS Feed. The installed app is labeled BARF. Native Android app; Kotlin, Jetpack Compose, Room/SQLite, and WorkManager. No backend, account, analytics, AI, or cloud backup. Android 8.0+ (API 26). Current version: 0.1.3.
 
 ## Download
 
-Get the APK from [GitHub Releases](https://github.com/alienvisa/BARF-Boogies-Aggregated-RSS-Feed/releases/tag/v0.1.2). Choose **BARF-0.1.2-preview.apk** for the lightweight install (1.67 MiB). The debug APK is supplied for troubleshooting. This early release uses the existing development signing key; installing over the prior build keeps local data. Android may require permission to install from the app used to download it.
+Get **BARF-0.1.3.apk** from [the latest GitHub release](https://github.com/alienvisa/BARF-Boogies-Aggregated-RSS-Feed/releases/latest). It is the single optimized, universal APK for Android 8.0+. The existing signing identity is retained, so installing over a prior BARF build keeps local data. Android may require permission to install from your download app.
+
+
+## Obtainium updates
+
+[Add BARF to Obtainium](https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22app.localbrief%22%2C%22name%22%3A%22BARF%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Falienvisa%2FBARF-Boogies-Aggregated-RSS-Feed%22%2C%22author%22%3A%22alienvisa%22%7D), or open Obtainium → Add app and paste:
+
+https://github.com/alienvisa/BARF-Boogies-Aggregated-RSS-Feed
+
+The repository is public; no GitHub token is required. Normal releases contain exactly one APK, with matching Android/release version names, increasing version codes, and the same package ID/signing certificate. Keep standard version detection enabled; no APK filter or prerelease option is needed for v0.1.3 onward. Initial installs may require Android's install permission. Automatic installation depends on Obtainium and Android settings and is not guaranteed.
+
+See [Obtainium version tracking](https://wiki.obtainium.imranr.dev/app_tracking/), [configuration](docs/obtainium.json), and [release checklist](docs/releasing.md).
 
 ## Included
 
@@ -69,9 +80,9 @@ sh gradlew :app:assembleDebug :app:testDebugUnitTest :app:lintDebug
 
 Set the local Android SDK path through Android Studio or an ignored local.properties file. The project's current local.properties is workspace-specific and is excluded from the packaged source archive. The Gradle wrapper downloads its pinned distribution on first use.
 
-Debug APK output: app/build/outputs/apk/debug/app-debug.apk. Debug signing is for local development; a separately managed release signing key is needed before public distribution.
+Debug APK output: app/build/outputs/apk/debug/app-debug.apk. GitHub distribution retains the existing development signing certificate for update compatibility. Keep this signing key private and backed up; builds signed with a different key cannot update existing installs.
 
-For the smaller optimized development build, run `:app:assemblePreview :app:lintPreview`. The preview variant shrinks unused code/resources and uses the same development signing key. It is not a public release. Its output is app/build/outputs/apk/preview/app-preview.apk. The distributed preview APK has not been installed on a physical phone here; the automated screen/data tests run against the debug variant.
+For the smaller optimized development build, run `:app:assemblePreview :app:lintPreview`. The internally named preview variant shrinks unused code/resources and uses the existing signing key. Since v0.1.3, it has no version-name suffix: its Android version matches the GitHub tag after stripping the leading v. Its output is app/build/outputs/apk/preview/app-preview.apk; distribute it as BARF-<version>.apk. Both visual fixes were verified on a Pixel 9a; automated screen/data tests run against the debug variant.
 
 When rebuilding on another computer, Android Studio normally generates a different development signing key. Export a backup before uninstalling if Android refuses an update because its signing certificate differs.
 

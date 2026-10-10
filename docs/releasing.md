@@ -1,0 +1,11 @@
+# GitHub / Obtainium release checklist
+
+1. Increase versionName and versionCode in app/build.gradle.kts, and update the visible Settings version. Use a plain x.y.z versionName without a suffix. Create a new vX.Y.Z tag for every update; do not overwrite an old release's APK.
+2. Build the optimized preview variant, run tests and lint, and verify APK package/version/signature. This internal build-type name is not a public preview label. Preserve application ID app.localbrief and the signing certificate SHA-256 74034762E2AE90BFCA3BBBDC68C98B4B141624D452EE365EB7430FB7CB41D03E.
+3. The signing key is private local material, excluded from Git. Back it up securely. A clean machine's automatically generated debug key will differ and must not be used for GitHub updates. Do not add an unsigned/default-key CI release workflow. Public source archives must exclude local.properties, caches, APKs, signing keys, and user backups.
+4. Package exactly one installable release asset: BARF-X.Y.Z.apk. Do not attach a debug APK or a second Android variant to that release. Source ZIP, checksums, notes, and build report may accompany it.
+5. Publish a normal, non-draft GitHub release and mark it latest. The repository must remain publicly readable for token-free Obtainium access. Note testing limitations in release notes. Experimental prereleases may be separate, but require users to enable prereleases explicitly.
+6. Verify the unauthenticated GitHub latest-release endpoint returns the new tag and exactly one uploaded .apk. Compare the server's digest with the local SHA-256. Verify the APK reports the matching versionName, a higher versionCode, the retained package ID, and the retained signature.
+7. Confirm Obtainium can add the repository URL and select the APK without a filter. Verify installing over the previous app keeps local data. Record the device test performed; do not claim silent/background updates from a manual installation test.
+
+Obtainium configuration: docs/obtainium.json. Standard version detection compares Android's version string to the source version, so avoid Android-only suffixes. Refer to https://wiki.obtainium.imranr.dev/app_tracking/ and https://wiki.obtainium.imranr.dev/sources/.
