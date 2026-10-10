@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.layout.ContentScale
@@ -346,7 +347,7 @@ import java.util.Date
                 }
                 Row(verticalAlignment = Alignment.Top) {
                     Column(Modifier.weight(1f)) {
-                        TextButton(onClick = open, contentPadding = PaddingValues(0.dp)) {
+                        TextButton(onClick = open, shape = RectangleShape, contentPadding = PaddingValues(0.dp)) {
                             Text(item.title, color = Forest, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
                             Icon(Icons.AutoMirrored.Outlined.OpenInNew, "Open original", tint = Burgundy, modifier = Modifier.padding(start = 8.dp).size(20.dp))
                         }
