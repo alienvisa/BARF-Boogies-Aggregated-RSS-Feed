@@ -14,6 +14,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -69,14 +70,19 @@ import java.util.Date
     var removeSource by remember { mutableStateOf<Source?>(null) }
     var removeTopic by remember { mutableStateOf<Topic?>(null) }
     var restoreText by remember { mutableStateOf<String?>(null) }
+    var articleUrl by rememberSaveable { mutableStateOf<String?>(null) }
+    var articleTitle by rememberSaveable { mutableStateOf("") }
+    val todayScroll = rememberLazyListState()
+    val topicScroll = rememberLazyListState()
+    val savedScroll = rememberLazyListState()
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     fun back() { route = if (route == "Settings") previous else "Topics" }
     fun notify(text: String) { scope.launch { snackbar.showSnackbar(text) } }
     fun open(item: Item) {
-        runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, item.url.toUri())) }
-            .onFailure { notify("No app could open this link.") }
+        articleUrl = item.url
+        articleTitle = item.title
     }
     fun share(item: Item) {
         val intent = Intent(Intent.ACTION_SEND).apply { type = "text/plain"; putExtra(Intent.EXTRA_TEXT, item.url); putExtra(Intent.EXTRA_SUBJECT, item.title) }
@@ -102,13 +108,13 @@ import java.util.Date
             restoreText = text
         }
     }
-    LaunchedEffect(incoming?.nonce) { incoming?.let { model.receive(it.text, it.title); route = "Saved"; consumed() } }
+    LaunchedEffect(incoming?.nonce) { incoming?.let { model.receive(it.text, it.title); articleUrl = null; route = "Saved"; consumed() } }
     LaunchedEffect(model) { model.messages.collect { notice ->
         val result = snackbar.showSnackbar(notice.text, if (notice.undoItem != null) "Undo" else null)
         if (result == SnackbarResult.ActionPerformed) notice.undoItem?.let(model::undo)
     } }
     LaunchedEffect(route, ready, state.items) { if (route == "Today" && ready) model.visited(state.items) }
-    BackHandler(route !in listOf("Today", "Topics", "Saved")) { back() }
+    BackHandler(articleUrl == null && route !in listOf("Today", "Topics", "Saved")) { back() }
     BriefTheme(state.settings["theme"] ?: "System") { dark ->
         SideEffect {
             (context as? Activity)?.let { activity ->
@@ -122,6 +128,15 @@ import java.util.Date
         val subtle = if (dark) Mint else MutedForest
         val images = state.settings["images"] != "false"
         CompositionLocalProvider(LocalContentColor provides pageText) {
+            if (articleUrl != null) {
+                val canonical = runCatching { Rules.normalizeUrl(articleUrl!!) }.getOrNull()
+                val stored = state.items.firstOrNull { it.url == canonical && it.savedAt != null }
+                    ?: state.items.firstOrNull { it.url == canonical }
+                ArticleBrowser(articleUrl!!, articleTitle, dark, stored?.savedAt != null, snackbar,
+                    onPage = { url, title -> articleUrl = url; articleTitle = title },
+                    onSave = { if (stored?.savedAt != null) model.bookmark(stored) else model.receive(articleUrl!!, articleTitle) },
+                    onClose = { articleUrl = null }, notify = ::notify)
+            } else {
             Scaffold(containerColor = MaterialTheme.colorScheme.background,
                 snackbarHost = { SnackbarHost(snackbar) },
                 bottomBar = {
@@ -154,7 +169,8 @@ import java.util.Date
                             }
                         }.distinctBy { it.url }
                         PullToRefreshBox(isRefreshing = busy, onRefresh = { model.refresh() }, modifier = modifier) {
-                            LazyColumn(contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                            LazyColumn(state = when (route) { "Saved" -> savedScroll; "Topic" -> topicScroll; else -> todayScroll },
+                                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                                 item {
                                     if (route == "Topic") BackRow("Back to Topics", pageText) { back() }
                                     Header(title, when (route) { "Saved" -> "Articles and videos for later"; "Topic" -> "Updates from your chosen sources"; else -> "New since your last visit" }, subtle,
@@ -231,11 +247,12 @@ import java.util.Date
                         Text("Export sources, topics, saved links, and settings to a file you choose. Ordinary feed history is not included. Keep the file somewhere safe before uninstalling.", color = subtle)
                         PrimaryButton("Export backup", Icons.Outlined.FileDownload) { export.launch("local-brief-backup.json") }
                         OutlinedButton(onClick = { import.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) }, modifier = Modifier.fillMaxWidth()) { Text("Import backup", color = pageText) }
-                        Text("No account, server, analytics, AI, or cloud backup. The app contacts only the sources and image hosts needed to fetch your chosen content. Links open in other apps.", color = subtle, style = MaterialTheme.typography.bodySmall)
-                        Text("Local Brief · v0.1.0", color = subtle, style = MaterialTheme.typography.bodySmall)
+                        Text("No account, server, analytics, AI, or cloud backup. Feeds and images load directly. The article viewer contacts the publisher and the services embedded in its page.", color = subtle, style = MaterialTheme.typography.bodySmall)
+                        Text("Local Brief · v0.1.2", color = subtle, style = MaterialTheme.typography.bodySmall)
                     }
                 }
             }
+        }
         }
         if (topicEditor) TopicEditor(editingTopic, state, busy, { topicEditor = false },
             { name, include, exclude, sources -> model.act("Topic saved.") { model.repository.topic(name, include, exclude, sources, editingTopic?.id ?: 0); topicEditor = false } },

@@ -1,6 +1,6 @@
 # BARF - Boogies Aggregated RSS Feed
 
-Repository/project title: BARF - Boogies Aggregated RSS Feed. The installed app is currently labeled Local Brief. Native Android app; Kotlin, Jetpack Compose, Room/SQLite, and WorkManager. No backend, account, analytics, AI, or cloud backup. Android 8.0+ (API 26). This is the first development build, version 0.1.1.
+Repository/project title: BARF - Boogies Aggregated RSS Feed. The installed app is currently labeled Local Brief. Native Android app; Kotlin, Jetpack Compose, Room/SQLite, and WorkManager. No backend, account, analytics, AI, or cloud backup. Android 8.0+ (API 26). This is the first development build, version 0.1.2.
 
 ## Included
 
@@ -29,7 +29,7 @@ The app keeps a small URL/arrival ledger for each source's current feed window (
 2. Open Topics → Manage sources → Add source.
 3. Paste an HTTPS website/feed URL or YouTube channel URL/ID. Names are optional for new sources.
 4. Add topics, connect sources, and optionally define include/exclude phrases.
-5. Browse Today; tap headlines to open originals, or Save/Share.
+5. Browse Today; tap a headline to read the original page inside the app. Close it to return to the feed.
 6. In a browser or YouTube, use Share → Local Brief to save a link locally.
 7. Export a backup from Settings before uninstalling or changing phones.
 
@@ -39,7 +39,7 @@ Website discovery selects the first advertised RSS/Atom alternate feed. A source
 
 Feeds and links must use HTTPS; HTTP-only entries are skipped. Requests have timeouts, bounded response sizes, and limited redirects. Article markup is reduced to plain source text. Sources are retried independently and errors appear in Manage sources.
 
-Incoming shared links save the supplied title when available, otherwise the URL. The app does not scrape full articles to invent missing previews. Original articles/videos open in other applications and require connectivity. Content already stored locally is available offline; automatic collection requires internet access. There is no cross-device sync.
+Incoming shared links save the supplied title when available, otherwise the URL. The app does not scrape full articles to invent missing previews. Original pages open in the in-app viewer and require connectivity. Open externally remains available for a full browser, downloads, and unsupported video/site features. Content already stored locally is available offline; automatic collection requires internet access. There is no cross-device sync.
 
 Background refresh is approximate and can be delayed by Android battery restrictions or stop after force-stop until the app is reopened. There are no notifications in this first development build. Ordinary feed history and thumbnail caches are excluded from backups; saved content is included. Exported JSON is readable by whoever has the file. Restore validates before replacing data and uses a database transaction; the app asks before replacement.
 
@@ -78,3 +78,11 @@ Unit tests exercise feed parsing, keyword filtering, URL normalization, share re
 ## Design references
 
 See [Design Bible](docs/design-bible.md), [Mockups Tracker](docs/mockups-tracker.md), and [v1 Scope](docs/v1-scope.md). The approved card-stack app icon is recreated as an Android vector with adaptive masks and a monochrome themed variant. App ID and signing identity are retained so this update preserves existing local data.
+
+## In-app article viewer
+
+Headlines open a single-page viewer with the current site domain, loading progress, page Back/Forward, Stop/Reload, Close, Save, Share, and Open externally. Closing returns to the same feed/topic/saved screen. Android Back traverses page history before closing. Save and Share use the current page after following links; bookmarks retain the existing source preview when the page already exists in the library.
+
+HTTPS pages render through the device's WebView, with JavaScript and first-party cookies for ordinary site compatibility. File/content navigation, insecure mixed content, third-party cookies, automatic media playback, and automatic popup windows are disabled. No native JavaScript bridge is exposed. Browsing state/cookies/cache stay on this device and are excluded from app exports and cloud backup. Publishers' own embedded services can still make network requests.
+
+This is the publisher's normal page, including its ads, sign-in prompts, and paywalls. App theme colors apply to the viewer controls; pages keep their own appearance. Full-screen video, popup-based sign-in, browser-specific features, and PDF downloads may need Open externally. Downloads are handed to an external browser; the app does not request file storage permissions. On rotation or process restoration, the current URL reopens; page history and scroll position may reset. Page cache is not a guaranteed offline article download, and the 14-day feed retention rule does not manage website cookies/cache.

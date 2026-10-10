@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.*
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.ViewModelProvider
 import app.localbrief.ui.BriefApp
 
 data class IncomingShare(val text: String, val title: String?, val nonce: Long = System.nanoTime())
@@ -16,7 +17,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         if (savedInstanceState == null) receive(intent)
-        setContent { val model: BriefViewModel = viewModel(); BriefApp(model, incoming) { incoming = null } }
+        val factory = ViewModelProvider.AndroidViewModelFactory(application)
+        setContent { val model: BriefViewModel = viewModel(factory = factory); BriefApp(model, incoming) { incoming = null } }
     }
     override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); setIntent(intent); receive(intent) }
     private fun receive(intent: Intent?) {

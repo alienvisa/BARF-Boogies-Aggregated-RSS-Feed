@@ -232,3 +232,9 @@ For each intentional design-system change, record the date, reason, affected tok
 
 October 10, 2026: Card-stack icon (option 1) approved. Forest background, warm-white front card, mint rear card and corner tab, forest headline bars. Implement as a vector adaptive icon with a monochrome themed variant. Repository/project title: BARF - Boogies Aggregated RSS Feed. App display label remains Local Brief until separately renamed.
 
+
+## In-app article viewer
+
+Implemented in v0.1.2 for user review. Use a focused full-screen viewer; hide the main bottom navigation while reading. Reuse the page/header theme tokens. Show Close, the page title, and current site domain at the top, then Save/Saved, Share, and an accessible external-open icon. Show a thin loading indicator. Place page Back, Forward, and Stop/Reload in the bottom safe-area toolbar; disabled controls use sage. All targets retain the 48 dp minimum. Close returns to the underlying feed position; Android Back traverses page history first.
+
+Read the publisher's original page without generating summaries or altering article content. The app themes its surrounding controls; web pages control their own styles. Save/Share target the currently viewed URL, including after following links. Error states provide retry and external-browser actions. This implementation does not constitute a separately approved screen mockup.
