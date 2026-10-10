@@ -45,7 +45,7 @@ Background refresh is approximate and can be delayed by Android battery restrict
 
 ## Design references
 
-The [Design Bible](../design-bible.md) and [Mockups Tracker](../mockups-tracker.md) are the shared visual specifications. Add/Edit dialogs and Settings are functional extensions using those tokens; their detailed layouts have not had separate mockup approval.
+The [Design Bible](docs/design-bible.md) and [Mockups Tracker](docs/mockups-tracker.md) are the shared visual specifications. Add/Edit dialogs and Settings are functional extensions using those tokens; their detailed layouts have not had separate mockup approval.
 
 ## Build
 
