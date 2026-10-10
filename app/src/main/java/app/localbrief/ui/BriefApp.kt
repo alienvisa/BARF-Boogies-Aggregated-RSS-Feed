@@ -111,7 +111,8 @@ import java.util.Date
     }
     LaunchedEffect(incoming?.nonce) { incoming?.let { model.receive(it.text, it.title); articleUrl = null; route = "Saved"; consumed() } }
     LaunchedEffect(model) { model.messages.collect { notice ->
-        val result = snackbar.showSnackbar(notice.text, if (notice.undoItem != null) "Undo" else null)
+        val result = snackbar.showSnackbar(notice.text, if (notice.undoItem != null) "Undo" else null,
+            duration = if (notice.undoItem != null) SnackbarDuration.Long else SnackbarDuration.Short)
         if (result == SnackbarResult.ActionPerformed) notice.undoItem?.let(model::undo)
     } }
     LaunchedEffect(route, ready, state.items) { if (route == "Today" && ready) model.visited(state.items) }
